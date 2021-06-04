@@ -1,0 +1,246 @@
+<template>
+    <v-data-table
+    v-if="!$fetch.pending"
+    :headers="headers"
+    :items="$store.getters['requerimientos/getRequerimientos']()"
+    :items-per-page="5"
+    :search="search"
+
+    no-data-text="No hay requerimientos disponibles"
+    class="elevation-1"
+  >
+    <template v-slot:top>
+        <v-toolbar flat>
+            <v-toolbar-title>Requerimientos</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="Search"
+                single-line
+                hide-details
+            ></v-text-field>
+        </v-toolbar>
+    </template>
+    <template v-slot:item.categories="{item}">
+        <div>Creación de usuario</div>
+    </template>
+    <template v-slot:item.supervisedBy="{item}">
+        <div v-if="!!item.supervisedBy">{{(item.supervisedBy.email === $store.state.user.email) ? 'Yo' :item.supervisedBy.firstName}}</div>
+        <template v-else>
+            <assign-tech v-if="$store.state.user.rol === 'tech'" :requerimientoCode="item.code" ></assign-tech>
+            <div v-else> Nadie</div>
+        </template>
+    </template>
+    <template v-slot:item.asignar="{item}">  
+        <assign-admin :requerimientoCode="item.code" :assigned="item.supervisedBy" ></assign-admin>
+    </template>
+        <template v-slot:item.ver="{item}">
+        <v-icon @click.stop="clickRow(item)"> mdi-eye</v-icon>    
+
+    </template>
+  </v-data-table>
+</template>
+
+<script>
+import getAllRequerimientos from "@/networking/requerimientos/get.all.requerimientos"
+import AssignAdmin from "@/components/asignar.admin.requerimiento"
+import AssignTech from "@/components/asignar.tech.requerimiento"
+
+export default {
+    components:{
+        AssignAdmin,
+        AssignTech
+    },
+    layout:"admin",
+    async fetch(){
+        try {
+            let requerimientos 
+            if (this.$store.getters["user/getRol"]() === "admin"){
+                const [req,_] = await Promise.all([
+                getAllRequerimientos.bind(this.$axios)(this.$cookies),
+                this.$store.dispatch("users/getUsers")
+                ])
+                requerimientos = req
+            }else{
+                requerimientos = await  getAllRequerimientos.bind(this.$axios)(this.$cookies)
+            }
+            
+            
+            this.$store.commit("requerimientos/set",requerimientos)
+        } catch (e) {
+            console.log(e)
+                             this.$swal({
+                icon:"error",
+                title: 'Error',
+                text: e
+                })
+       
+        } 
+        
+    },
+    beforeMount(){
+        if(this.$store.state.user.rol === 'tech'){
+
+            this.headers = [
+                    {
+                    text:"Código",
+                    align:"start",
+                    sortable:true,
+                    value:'code'
+                },
+                {
+                    text:"Fecha de registro",
+                    align:"start",
+                    sortable:true,
+                    value:'fechaCreacion'
+                },
+                {
+                    text:"Detalle",
+                    value:'categories',
+                    sortable:false,
+                },
+                {
+                    text:"Reportador por",
+                    value:"creator.dni",
+                    sortable:false,
+                },
+                {
+                    text:"Estado",
+                    value:"status",
+                    sortable:true,
+                },
+                            {
+                    text:"Prioridad",
+                    value:"creator.priority",
+                    sortable:true,
+                },
+                {
+                    text:"Responsable",
+                    value:"supervisedBy",
+                    sortable:true,
+                },
+                {
+                    text:"Ver más",
+                    value:"ver",
+                    align:"center",
+                    sortable:false,
+                }
+            ]
+            return
+            }
+        this.headers = [
+            {
+                text:"Código",
+                align:"start",
+                sortable:true,
+                value:'code'
+            },
+            {
+                text:"Fecha de registro",
+                align:"start",
+                sortable:true,
+                value:'fechaCreacion'
+            },
+            {
+                text:"Detalle",
+                value:'categories',
+                sortable:false,
+            },
+            {
+                text:"Reportador por",
+                value:"creator.dni",
+                sortable:false,
+            },
+            {
+                text:"Estado",
+                value:"status",
+                sortable:true,
+            },
+                        {
+                text:"Prioridad",
+                value:"creator.priority",
+                sortable:true,
+            },
+            {
+                text:"Responsable",
+                value:"supervisedBy",
+                sortable:true,
+            },
+            {
+                text:"Asignar",
+                align:"center",
+                value:"asignar",
+                sortable:false,
+            },
+            {
+                text:"Ver más",
+                value:"ver",
+                align:"center",
+                sortable:false,
+            }
+        ]
+    },
+    data:()=>({
+        modo:"tech",
+        items:[],
+        search:"",
+        headers:[
+            {
+                text:"Código",
+                align:"start",
+                sortable:true,
+                value:'code'
+            },
+            {
+                text:"Fecha de registro",
+                align:"start",
+                sortable:true,
+                value:'fechaCreacion'
+            },
+            {
+                text:"Detalle",
+                value:'categories',
+                sortable:false,
+            },
+            {
+                text:"Reportador por",
+                value:"creator.dni",
+                sortable:false,
+            },
+            {
+                text:"Estado",
+                value:"status",
+                sortable:true,
+            },
+                        {
+                text:"Prioridad",
+                value:"creator.priority",
+                sortable:true,
+            },
+            {
+                text:"Responsable",
+                value:"supervisedBy",
+                sortable:true,
+            },
+            {
+                text:"Ver más",
+                value:"ver",
+                align:"center",
+                sortable:false,
+            }
+        ],
+        
+    }),
+    methods:{
+        clickRow(item){
+            this.$router.push({path:"/admin/requerimientos/"+item.code})
+        },
+
+    }
+}
+</script>
+
+<style>
+
+</style>

@@ -11,9 +11,14 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/dayjs": "^1.4.0",
+    "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.9.1",
+    "dayjs": "^1.10.5",
     "dotenv": "^10.0.0",
-    "nuxt": "^2.15.3"
+    "nuxt": "^2.15.3",
+    "vue-json-excel": "^0.3.0",
+    "vue-sweetalert2": "^4.3.1"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.3",
@@ -24,6 +29,7 @@
     "eslint-plugin-prettier": "^3.3.1",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
+    "sass": "~1.32.6",
     "vue-jest": "^3.0.4"
   }
 }
