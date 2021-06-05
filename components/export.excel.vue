@@ -29,6 +29,7 @@ export default {
                     return resolved[0].fechaCreacion 
                 }
             },
+            "Fecha de asignacion":"fechaAsignacion",
             "Fecha de cierre":"fechaCierre",
             "Detalle":{
                 field: "categories",
