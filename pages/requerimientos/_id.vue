@@ -174,7 +174,7 @@ export default {
     async fetch(){
         const req = this.$store.state.requerimientos.list.find(x=>x.code === this.$route.params.id)
         if(!req)
-           await this.$router.replace("/admin/requerimientos")
+           await this.$router.replace("/requerimientos")
     },
     data:()=>({
         dialog:false,
