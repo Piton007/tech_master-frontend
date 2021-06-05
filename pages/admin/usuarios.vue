@@ -178,11 +178,12 @@ export default {
             this.newPassword = password
             this.dialog = true
           } catch (error) {
-            console.log(error)
+            const {response:{data}} = error
+            const errors = Object.entries(data.errors).map(([key,value])=>`${key}: ${value}`)
             this.$swal({
               icon:"error",
-              title: 'Error',
-              text: error
+              titleText: data.msg,
+              text:  errors.join("\n")
             })
           }finally {
             this.reset()
