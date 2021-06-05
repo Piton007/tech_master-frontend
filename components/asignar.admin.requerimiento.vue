@@ -8,6 +8,7 @@
         <v-btn
           color="primary"
           dark
+          :disabled="disabled"
           v-bind="attrs"
           v-on="on"
         >
@@ -61,7 +62,8 @@ export default {
                     id:""
                 }
             }
-        } 
+        },
+        disabled:Boolean 
     },
     beforeMount(){
         if(!this.assigned) return 
