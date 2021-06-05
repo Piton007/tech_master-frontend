@@ -94,8 +94,8 @@
 
 
                 </v-card-text>
-                <v-card-actions>
-                    <v-btn color="primary" @click="dialog=true" v-if="requerimiento.status ==='En curso'" block> Resolver</v-btn>
+                <v-card-actions v-if="!!requerimiento.supervisedBy" >
+                    <v-btn color="primary" @click="dialog=true" v-if="requerimiento.status ==='En curso' && requerimiento.supervisedBy.email === $store.state.user.email " block> Resolver</v-btn>
                 </v-card-actions>
             </v-card>
         </v-col>
