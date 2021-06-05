@@ -36,7 +36,7 @@
         </v-breadcrumbs-item>
         </template>
     </v-breadcrumbs>
-    <v-container>
+    <v-container v-if="!$fetch.pending">
     <v-row style="flex-wrap: no-wrap" >
         <v-col  md="4" sm="12">
             <v-card>
@@ -171,6 +171,11 @@ import verifyRequerimiento from "@/networking/requerimientos/verify.requerimient
 
 export default {
     layout:"client",
+    async fetch(){
+        const req = this.$store.state.requerimientos.list.find(x=>x.code === this.$route.params.id)
+        if(!req)
+           await this.$router.replace("/admin/requerimientos")
+    },
     data:()=>({
         dialog:false,
         decision:"",

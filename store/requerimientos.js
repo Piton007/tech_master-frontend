@@ -38,10 +38,9 @@ export const mutations = {
     spliceById(state,requerimiento){
         const index = state.list.findIndex(x=>x.code === requerimiento.code)
         state.list.splice(index,1,assembleVM(requerimiento))
-     
-   
     }
 }
+
 
 function assembleVM(dto){
     const now = dayjs().format("YYYY/MM/DD HH:mm:ss")
