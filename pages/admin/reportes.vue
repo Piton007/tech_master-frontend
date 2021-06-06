@@ -33,7 +33,7 @@
     </template>
   </v-data-table>
   <div>
-       <export-excel   class="my-3 mr-2"
+       <export-requerimiento   class="my-3 mr-2"
             style="float:right"   />
   </div>
  
@@ -42,12 +42,12 @@
 
 <script>
 import getAllRequerimientos from "@/networking/requerimientos/get.all.requerimientos"
-import ExportExcel from "@/components/export.requerimiento.excel"
+import ExportRequerimiento from "@/components/export.requerimiento.excel.vue"
 
 export default {
     layout:"admin",
-    Components:{
-        ExportExcel
+    components:{
+       "export-requerimiento":ExportRequerimiento
     },
     async fetch(){
         try {
