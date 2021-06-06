@@ -1,5 +1,15 @@
 import getAllUser from "@/networking/users/get.all.user"
-
+const ROLS = {
+    "admin":"Admin",
+    "tech":"Técnico",
+    "volunteer":"Voluntario",
+    "teacher":"Maestro"
+}
+const PRIORITY = {
+    "high":"Alta",
+    "medium":"Media",
+    "low":"Baja"
+}
 
 export const state = () => ({
     list:[],
@@ -15,10 +25,10 @@ export const getters = {
 
 export const mutations = {
     add(state,user){
-        state.list.unshift(user)
+        state.list.unshift(assembleVM(user))
     },
     set(state,users){
-        state.list = users
+        state.list = users.map(assembleVM)
     }
 }
 
@@ -31,4 +41,7 @@ export const actions = {
             })
            
     }
+}
+function assembleVM(x){
+    return {...x,fullname:x.firstName + " "+x.lastName,priority:PRIORITY[x.priority],rol:ROLS[x.rol]}
 }

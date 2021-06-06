@@ -42,7 +42,7 @@
 
 <script>
 import getAllRequerimientos from "@/networking/requerimientos/get.all.requerimientos"
-import ExportExcel from "@/components/export.excel"
+import ExportExcel from "@/components/export.requerimiento.excel"
 
 export default {
     layout:"admin",
