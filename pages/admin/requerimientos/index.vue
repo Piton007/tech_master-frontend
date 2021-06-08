@@ -5,7 +5,9 @@
     :items="$store.getters['requerimientos/getRequerimientos']()"
     :items-per-page="5"
     :search="search"
-
+    :header-props="{
+        'sort-by-text':'Filtros'
+    }"
     no-data-text="No hay requerimientos disponibles"
     class="elevation-1"
   >
@@ -16,7 +18,7 @@
             <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
-                label="Search"
+                label="Buscar"
                 single-line
                 hide-details
             ></v-text-field>

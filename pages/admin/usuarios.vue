@@ -5,6 +5,9 @@
     :items="$store.getters['users/getUsers']()"
     :items-per-page="5"
     :search="search"
+    :header-props="{
+        'sort-by-text':'Filtros'
+    }"
     no-data-text="No hay usuarios disponibles"
     class="elevation-1"
   >
@@ -15,7 +18,7 @@
             <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
-                label="Search"
+                label="Buscar"
                 single-line
                 hide-details
             ></v-text-field>
@@ -136,7 +139,7 @@
               text
               @click="userDialog=false"
           >
-              Cancel
+              Cerrar
           </v-btn>
           <v-btn
               color="blue darken-1"

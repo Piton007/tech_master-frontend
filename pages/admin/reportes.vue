@@ -7,7 +7,11 @@
     :search="search"
     no-data-text="No hay requerimientos disponibles"
     class="elevation-1"
+    :header-props="{
+        'sort-by-text':'Filtros'
+    }"
   >
+  <data-table-header  sort-by-text="Buscar"></data-table-header>
     <template v-slot:top>
         <v-toolbar flat>
             <v-toolbar-title>Reporte de requerimientos</v-toolbar-title>
@@ -15,7 +19,7 @@
             <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
-                label="Search"
+                label="Buscar"
                 single-line
                 hide-details
             ></v-text-field>

@@ -6,6 +6,9 @@
         :items="$store.getters['requerimientos/getRequerimientos']()"
         :items-per-page="5"
         :search="search"
+        :header-props="{
+        'sort-by-text':'Filtros'
+        }"
         no-data-text="No hay requerimientos disponibles"
         class="elevation-1"
     >
@@ -94,14 +97,14 @@
                         text
                         @click="dialog=false"
                     >
-                        Cancel
+                        Cerrar
                     </v-btn>
                     <v-btn
                         color="blue darken-1"
                         text
                         @click="save"
                     >
-                        Save
+                        Guardar
                     </v-btn>
                     </v-card-actions>
                 </v-card>
@@ -110,7 +113,7 @@
                 <v-text-field
                     v-model="search"
                     append-icon="mdi-magnify"
-                    label="Search"
+                    label="Buscar"
                     single-line
                     hide-details
                 ></v-text-field>
