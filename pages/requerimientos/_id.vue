@@ -15,7 +15,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" text  @click="dialog=false"> Close</v-btn>
+                <v-btn color="primary" text  @click="dialog=false"> Cerrar</v-btn>
                 <v-btn color="primary" text  @click="verify"> Enviar</v-btn>
             </v-card-actions>
         </v-card>
@@ -201,6 +201,10 @@ import addComment from "@/networking/requerimientos/add.comment.requerimiento"
 export default {
     layout:"client",
     async fetch(){
+        if(!this.$store.state.requerimientos.list) {
+            await this.$router.replace("/requerimientos")
+            return 
+        }
         const req = this.$store.state.requerimientos.list.find(x=>x.code === this.$route.params.id)
         if(!req)
            await this.$router.replace("/requerimientos")

@@ -200,6 +200,10 @@ import addComment from "@/networking/requerimientos/add.comment.requerimiento"
 export default {
     layout:"admin",
     async fetch(){
+        if(!this.$store.state.requerimientos.list.length) {
+            await this.$router.replace("/admin/requerimientos")
+            return
+        }
         const req = this.$store.state.requerimientos.list.find(x=>x.code === this.$route.params.id)
         if(!req)
            await this.$router.replace("/admin/requerimientos")
