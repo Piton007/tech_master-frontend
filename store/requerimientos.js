@@ -43,7 +43,8 @@ export const mutations = {
 
 
 function assembleVM(dto){
-    const now = dayjs().format("YYYY/MM/DD HH:mm:ss")
+    const timeZone = new Date().toLocaleString('en-US', { timeZone: 'America/Lima' })
+    const now = dayjs(timeZone).format("YYYY/MM/DD HH:mm:ss")
     const end = dayjs(now,"YYYY/MM/DD HH:mm:ss")
     const mins = end.diff(dto.fechaCreacion, 'minutes', true)
     const duration = `${end.diff(dto.fechaCreacion, 'hours')}h ${dayjs().minute(mins).$m}m`
