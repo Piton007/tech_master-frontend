@@ -111,16 +111,18 @@
                         <v-card
                             color="info"
                             dark
-                            max-width="300"
+                            max-width="400"
                         >
                             <v-card-title class="text-h6">
-                             {{log.event}} 
+                             {{log.event}}
                             </v-card-title>
-                            <v-card-text  class="accent pt-2">
-                            {{log.comment}}
-                            <div class="text-caption font-weight-bold mt-2">
-                                {{log.fechaCreacion}}
-                            </div>
+                            <v-card-text class="accent pt-2">
+                                <div v-for="(text,key) in log.comment.split('\n')" :key="key">
+                                    {{text}}
+                                </div>
+                                <div class="text-caption font-weight-bold mt-2">
+                                    {{log.fechaCreacion}}
+                                </div>
                             </v-card-text>
                         </v-card>
                         </v-timeline-item>
@@ -134,20 +136,25 @@
     <v-row v-if="$vuetify.breakpoint.smAndDown">
         <v-col cols="12" >
                         <v-card style="height:100%; overflow:hidden" >
-                <v-card-title > Bitácora de requerimientos </v-card-title>
+                <v-card-title > Bitácora de requerimientos</v-card-title>
                 <div class="secondary" style="height:100%;max-height:90vh;overflowY:scroll" >
                     <v-timeline dense align-top style="height:100%">
                         <v-timeline-item v-for="(log,index) in logs" :key="index" color="warning" class="mb-4 pr-6" >                            
                         <v-card
-                            color="primary"
+                            color="info"
                             dark
                             max-width="300"
                         >
                             <v-card-title class="text-h6">
                              {{log.event}}
                             </v-card-title>
-                            <v-card-text  class="accent pt-2">
-                            {{log.comment}}
+                            <v-card-text class="accent pt-2">
+                                <div v-for="(text,key) in log.comment.split('\n')" :key="key">
+                                    {{text}}
+                                </div>
+                                <div class="text-caption font-weight-bold mt-2">
+                                    {{log.fechaCreacion}}
+                                </div>
                             </v-card-text>
                         </v-card>
                         </v-timeline-item>
@@ -158,7 +165,27 @@
 
         </v-col>
     </v-row>
-    
+    <v-row>
+        <v-col cols="12">
+            <v-card>
+                <v-card-title>
+                    Agregar Comentario
+                </v-card-title>
+                <v-card-text>
+                <v-form ref="formComment">
+                    <v-textarea outlined :rules="[(v=>!!v || '*Campo obligatorio')]" label="Descripción" placeholder="Añadir un nuevo comentario..." v-model="newComment">
+
+                    </v-textarea>
+                </v-form>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" @click="submitComment" text :disabled="newCommentLoading"> Añadir</v-btn>
+                </v-card-actions>
+                </v-card-text>
+            </v-card>
+
+        </v-col>
+    </v-row>
     </v-container>
     
     </div>
@@ -168,6 +195,8 @@
 
 <script>
 import verifyRequerimiento from "@/networking/requerimientos/verify.requerimiento"
+import addComment from "@/networking/requerimientos/add.comment.requerimiento"
+
 
 export default {
     layout:"client",
@@ -179,7 +208,9 @@ export default {
     data:()=>({
         dialog:false,
         decision:"",
-        comment:""
+        comment:"",
+        newComment:"",
+        commentLoading:false
     }),
     computed:{
         logs(){
@@ -203,6 +234,34 @@ export default {
         }
     },
     methods:{
+        async submitComment(){
+            if(!this.$refs.formComment.validate()) return
+            try {
+                this.newCommentLoading = true
+                const requerimiento = await addComment.bind(this)({
+                    user_id:this.$store.state.user.id,
+                    requerimiento_code:this.requerimiento.code,
+                    comment:this.newComment}
+                    )
+                this.$store.commit("requerimientos/spliceById",requerimiento)
+                this.$swal({
+                    icon:"success",
+                    title:"Nuevo comentario",
+                    text:"Se ha agregado un nuevo comentario"
+
+                })
+            } catch (error) {
+                this.$swal({
+                icon:"error",
+                title: 'Error',
+                text: error
+                })
+            }finally{
+                this.$refs.formComment.reset()
+                this.newCommentLoading = false
+                this.dialog = false
+            }
+        },
         reset(){
             this.decision = ""
             this.comment = ""

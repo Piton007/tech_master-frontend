@@ -51,6 +51,26 @@
                             label="Tipo de usuario"
                             ></v-select>
                         </v-col>
+                        <v-col cols="12"
+                            v-if="servicio === 'Crear usuario'"
+                        >
+                            <v-text-field
+                            v-model="name"
+                            :rules="[v=> !!v || '*Campo obligatorio']"
+                            label="Nombre"
+                            >
+                            </v-text-field>
+                        </v-col>
+                        <v-col cols="12"
+                            v-if="servicio === 'Crear usuario'"
+                        >
+                            <v-text-field
+                            v-model="lastname"
+                            :rules="[v=> !!v || '*Campo obligatorio']"
+                            label="Apellidos"
+                            >
+                            </v-text-field>
+                        </v-col>
                         <v-col
                             cols="12"
                             v-if="servicio === 'Crear usuario'"
@@ -74,6 +94,30 @@
                             label="DNI"
                         >
                         </v-text-field>
+                        </v-col>
+                        <v-col cols="12"
+                        v-if="servicio === 'Crear usuario'"
+
+                        >
+                            <v-text-field
+                            v-model="institucion"
+                            :rules="[v=> !!v || '*Campo obligatorio']"
+                            label="Institución educativa"
+                            >
+                            </v-text-field>
+                        </v-col>
+                        <v-col cols="12"
+                        v-if="servicio === 'Crear usuario'"
+                        >
+                            <v-select
+                            v-model="priority"
+                            :items="priorityOptions"
+                            item-text="text"
+                            item-value="value"
+                            :rules="[v=> !!v || '*Campo obligatorio']"
+                            label="Prioridad"
+                            >
+                            </v-select>
                         </v-col>
                         <v-col
                             cols="12"
@@ -155,6 +199,12 @@ import createRequerimientos from "@/networking/requerimientos/create.requerimien
 import getAllRequerimientos from "@/networking/requerimientos/get.all.requerimientos"
 
 
+const PRIORITY = {
+    "high":"Alta",
+    "medium":"Media",
+    "low":"Baja"
+}
+
 export default {
     layout:"client",
     async fetch(){
@@ -232,9 +282,23 @@ export default {
         servicio:"",
         dni:"",
         email:"",
+        priority:"",
+        name:"",
+        institucion:"",
+        lastname:"",
         description:"",
-        tipoUsuario:""
+        tipoUsuario:"",
+        priorityOptions:[
+        {text:"Alta",value:"high"},
+        {text:"Media",value:"medium"},
+        {text:"Baja",value:"low"}
+        ]
     }),
+    computed:{
+        prioridad(){
+            return PRIORITY[this.priority]
+        }
+    },
     methods:{
         clickRow(item,data){
             this.$router.push({path:"/requerimientos/"+item.code})
@@ -247,20 +311,23 @@ export default {
             this.tipoUsuario = ""
             this.dialog = false
         },
+        
         async save(){
             if(!this.$refs.form.validate()) return 
             try {
                 const description = `
-                
+                Nombre Completo: ${this.name} ${this.lastname}
                 DNI:${this.dni}
                 Email: ${this.email}
                 Tipo Usuario: ${this.tipoUsuario}
+                Institución: ${this.institucion}
+                Prioridad : ${this.prioridad}
 
                 ${this.description}
                 `
                 const requerimientos = await createRequerimientos.bind(this)({
                 description:description,
-                categories: [this.servicio,this.tipoUsuario,this.dni,this.email]                
+                categories: [this.servicio,this.tipoUsuario,this.dni,this.email,this.name,this.lastname,this.institucion,this.priority]                
                 })
                 this.$store.commit("requerimientos/add",requerimientos)
             } catch (error) {
