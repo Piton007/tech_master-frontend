@@ -104,7 +104,7 @@ export default {
     computed:{
         userOptions(){
             const users = [...this.$store.state.users.list]            
-            return users.map((x)=>{
+            return users.filter(x=>x.rol === 'Admin' || x.rol === "Técnico").map((x)=>{
                if(x.email === this.$store.state.user.email)
                     return {
                         text: "Yo",
