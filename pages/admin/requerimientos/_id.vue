@@ -91,6 +91,14 @@
                         {{line}}
                     </div>
                 </div>
+                <p v-if="documents.length > 0" class="mb-2 mx-2 font-weight-bold">
+                    Adjuntos: 
+                </p>
+                <div class="mb-2 mx-2">
+                    <a :href="file.link" class="mb-2 mx-2" target="_blank" v-for="(file,index) in documents" :key="index">
+                        {{file.urn}}
+                    </a>
+                </div>
 
 
                 </v-card-text>
@@ -196,17 +204,24 @@
 <script>
 import resolveRequerimiento from "@/networking/requerimientos/resolve.requerimiento"
 import addComment from "@/networking/requerimientos/add.comment.requerimiento"
+import {generateLink} from "@/utils/s3"
+
 
 export default {
     layout:"admin",
     async fetch(){
-        if(!this.$store.state.requerimientos.list.length) {
+        try {
+            if(!this.$store.state.requerimientos.list.length) {
             await this.$router.replace("/admin/requerimientos")
             return
         }
         const req = this.$store.state.requerimientos.list.find(x=>x.code === this.$route.params.id)
         if(!req)
            await this.$router.replace("/admin/requerimientos")
+        } catch (error) {
+             await this.$router.replace("/admin/requerimientos")
+        }
+
     },
     data:()=>({
        dialog:false,
@@ -217,6 +232,9 @@ export default {
     computed:{
         requerimiento(){
             return this.$store.state.requerimientos.list.find(x=>x.code === this.$route.params.id)
+        },
+          documents(){
+            return this.requerimiento.documents.map(x=>({link:generateLink(x),urn:x}))
         },
         logs(){
             const _requerimiento = this.$store.state.requerimientos.list.find(x=>x.code === this.$route.params.id)

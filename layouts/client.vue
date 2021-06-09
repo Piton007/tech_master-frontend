@@ -29,7 +29,7 @@
       
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="title" />
+           <img   src="/logo.png" width="110"/>
     </v-app-bar>
     <v-main style="position:relative">
       <v-container >

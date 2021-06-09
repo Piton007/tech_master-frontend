@@ -1,5 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 import {config} from "dotenv"
+
 require('dayjs/locale/es')
 
 config()
@@ -23,6 +24,7 @@ export default {
   
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    "filepond/dist/filepond.min.css"
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

@@ -12,13 +12,18 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/dayjs": "^1.4.0",
+    "@nuxtjs/vuetify": "^1.11.3",
+    "aws-s3": "^2.0.5",
+    "aws-sdk": "^2.925.0",
     "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.9.1",
     "dayjs": "^1.10.5",
     "dotenv": "^10.0.0",
+    "filepond": "^4.28.2",
+    "filepond-plugin-file-validate-size": "^2.2.4",
     "nuxt": "^2.15.3",
+    "vue-filepond": "^6.0.3",
     "vue-json-excel": "^0.3.0",
-    "@nuxtjs/vuetify": "^1.11.3",
     "vue-sweetalert2": "^4.3.1"
   },
   "devDependencies": {

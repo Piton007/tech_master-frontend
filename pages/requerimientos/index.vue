@@ -1,5 +1,6 @@
 <template>
     <div >
+        
         <v-data-table
 
         :headers="headers"
@@ -130,6 +131,45 @@
                             ></v-textarea>
                         </v-col>
                         </v-row>
+                        <v-row>
+                            <v-col cols="12">
+                            <div class="mb-3"> Agregar archivos</div>
+                            <file-pond
+                            :files="files"
+                            ref="pond"
+                            :disabled="fileDisabled"
+                            label-idle="Arrastra archivo aquí o haz un click/toque"
+                            labelFileProcessingAborted="Subida cancelada"
+                            labelTapToRetry="Click/toque para volver a intentar"
+                            labelFileProcessing="Subiendo"
+                            labelTapToCancel="Cancelar"
+                            labelFileProcessingComplete="Archivo subido"
+                            :instant-upload="true"
+                            :allow-revert="false"
+                            allowRemove
+                            labelButtonRemoveItem="Eliminar"
+                            allow-multiple="true" 
+                            max-files="3"
+                            :server="fileServer"
+                            labelFileTypeNotAllowed="Tipo de archivo no permitido"
+                            maxTotalFileSize="5MB"
+                            labelMaxTotalFileSizeExceeded="Archivo es muy pesado"
+                            labelMaxTotalFileSize="Máximo 5MB"
+                            @init="handleFilePondInit"
+                            @processfile="handleProcessfile"
+                            >
+
+                            </file-pond>
+                            <div class="text-center">   
+                             <v-btn  @click="deleteAllFiles" x-small color="error">
+                                <v-icon >mdi-trash-can-outline</v-icon>
+                                Eliminar
+                            </v-btn>
+                            </div>
+
+                            </v-col>
+                         
+                        </v-row>
                         </v-form>
                     </v-container>
                     </v-card-text>
@@ -197,7 +237,8 @@
 <script>
 import createRequerimientos from "@/networking/requerimientos/create.requerimientos.js"
 import getAllRequerimientos from "@/networking/requerimientos/get.all.requerimientos"
-
+import FilePond from "@/utils/upload.documents"
+import {upload,remove} from "@/utils/s3"
 
 const PRIORITY = {
     "high":"Alta",
@@ -207,6 +248,9 @@ const PRIORITY = {
 
 export default {
     layout:"client",
+    components:{
+        FilePond
+    },
     async fetch(){
         try {
             const requerimientos = await getAllRequerimientos.bind(this.$axios)(this.$cookies)
@@ -224,6 +268,8 @@ export default {
     data:()=>({
         dialog:false,
         search:"",
+        files:[],
+        fileDisabled:false,
         headers:[
             {
                 text:"Código",
@@ -292,7 +338,8 @@ export default {
         {text:"Alta",value:"high"},
         {text:"Media",value:"medium"},
         {text:"Baja",value:"low"}
-        ]
+        ],
+        fileServer:{}
     }),
     computed:{
         prioridad(){
@@ -300,6 +347,33 @@ export default {
         }
     },
     methods:{
+        handleFilePondInit () {
+        this.fileServer = {
+            process: (fieldName, file, metadata, load, error, progress, abort) => {
+            upload(file, (err, data) => {
+                if (err) {
+                error('Ha ocurrido un error al subir el archivo')
+                return
+                }
+                load(data.Key)
+            })
+            },
+        }
+        },
+        handleProcessfile (error, file) { 
+        if (error) {
+            return
+        }
+        this.files.push(file)
+        },
+        deleteAllFiles(){
+            this.files.forEach(x=>{
+                remove(x.serverId,(error,data)=>{
+                    if (error) console.log(error) 
+                })
+            })
+            this.$refs.pond.removeFiles()
+        },
         clickRow(item,data){
             this.$router.push({path:"/requerimientos/"+item.code})
         },
@@ -327,7 +401,10 @@ export default {
                 `
                 const requerimientos = await createRequerimientos.bind(this)({
                 description:description,
-                categories: [this.servicio,this.tipoUsuario,this.dni,this.email,this.name,this.lastname,this.institucion,this.priority]                
+                documents:(!this.files.length) ? this.files : this.files.map(x=>x.serverId),
+                categories: 
+                [
+                    this.servicio,this.tipoUsuario,this.dni,this.email,this.name,this.lastname,this.institucion,this.priority]                
                 })
                 this.$store.commit("requerimientos/add",requerimientos)
             } catch (error) {

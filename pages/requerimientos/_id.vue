@@ -89,6 +89,14 @@
                         {{line}}
                     </div>
                 </div>
+                <p v-if="documents.length > 0"  class="mb-2 mx-2 font-weight-bold">
+                    Adjuntos: 
+                </p>
+                <div class="mb-2 mx-2">
+                    <a :href="file.link" class="mb-2 mx-2" target="_blank" v-for="(file,index) in documents" :key="index">
+                        {{file.urn}}
+                    </a>
+                </div>
 
 
                 </v-card-text>
@@ -196,24 +204,30 @@
 <script>
 import verifyRequerimiento from "@/networking/requerimientos/verify.requerimiento"
 import addComment from "@/networking/requerimientos/add.comment.requerimiento"
-
+import {generateLink} from "@/utils/s3"
 
 export default {
     layout:"client",
     async fetch(){
-        if(!this.$store.state.requerimientos.list) {
+        try {
+            if(!this.$store.state.requerimientos.list.length) {
             await this.$router.replace("/requerimientos")
             return 
         }
         const req = this.$store.state.requerimientos.list.find(x=>x.code === this.$route.params.id)
         if(!req)
            await this.$router.replace("/requerimientos")
+        } catch (error) {
+            await this.$router.replace("/requerimientos")
+        }
+    
     },
     data:()=>({
         dialog:false,
         decision:"",
         comment:"",
         newComment:"",
+        newCommentLoading:"",
         commentLoading:false
     }),
     computed:{
@@ -228,6 +242,9 @@ export default {
             return this.$store.state.requerimientos.list.find(x=>x.code === this.$route.params.id)
                   
             
+        },
+        documents(){
+            return this.requerimiento.documents.map(x=>({link:generateLink(x),urn:x}))
         },
         breadcrumbs(){
             
