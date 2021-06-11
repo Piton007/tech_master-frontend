@@ -1,5 +1,5 @@
 <template>
-  <v-app >
+  <v-app class="primary-gradient">
     <v-main >
       <v-container>
         <nuxt />

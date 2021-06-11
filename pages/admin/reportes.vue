@@ -33,7 +33,7 @@
             <div v-else> Nadie </div>
         </template>
     <template v-slot:item.ver="{item}">
-        <v-icon @click.stop="clickRow(item)"> mdi-eye</v-icon>    
+        <v-icon @click.stop="clickRow(item)" color="info"> mdi-eye</v-icon>    
     </template>
   </v-data-table>
   <div>

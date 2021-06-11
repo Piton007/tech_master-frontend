@@ -24,6 +24,7 @@ export default {
   
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    "~/assets/main.scss",
     "filepond/dist/filepond.min.css"
   ],
 
@@ -62,16 +63,25 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
-          primary: colors.blue.darken2,
+          primary: "#1b98e0",
           accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
+          secondary: "#d5d5d5",
           info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3
+          warning: "#ffc145",
+          error: "#ff6666",
+          success: "#42e2b8"
+        },
+        light:{
+          primary: "#1b98e0",
+          accent: colors.grey.darken3,
+          secondary: "#ffffff",
+          info: colors.teal.lighten1,
+          warning: "#ffc145",
+          error: "#ff6666",
+          success: "#42e2b8"
         }
       }
     }

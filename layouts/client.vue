@@ -4,6 +4,8 @@
     <v-navigation-drawer
       v-model="drawer"
       clipped
+      dark
+      class="primary-gradient"
       app     
     >
       <v-list>
@@ -25,6 +27,9 @@
     </v-navigation-drawer>
     <v-app-bar
      clipped-left
+     dark
+           class="app-bar"
+
       app
       
     >
@@ -54,7 +59,7 @@ export default {
     }
   },
   mounted(){
-   
+    this.$vuetify.theme.dark=false
     this.initMenu()
   },
   methods:{

@@ -1,12 +1,14 @@
 <template>
-  <v-app >
 
+  <v-app class="accent-bg" >
     <v-navigation-drawer
       v-model="drawer"
+      class="primary-gradient"
+      dark
       clipped
       app     
     >
-      <v-list>
+      <v-list >
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -26,6 +28,8 @@
     <v-app-bar
      clipped-left
       app
+      dark
+      class="app-bar"
       
     >
     <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
@@ -34,13 +38,16 @@
       
     </v-app-bar>
     <client-only>
-    <v-main>
+    <v-main  >
       <v-container>
         <nuxt />
       </v-container>
     </v-main>
     </client-only>
+
   </v-app>
+  
+
 </template>
 
 <script>

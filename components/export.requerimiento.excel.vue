@@ -2,7 +2,7 @@
   <json-excel :fields="jsonFields" worksheet="Reporte de requerimientos" name="Reporte_Requerimentos.xls" :data="$store.getters['requerimientos/getRequerimientos']()" > 
     
       <slot>
-          <v-btn  fab color="green">
+          <v-btn  fab color="green" dark>
               <v-icon> mdi-file-excel</v-icon>
           </v-btn>
       </slot>

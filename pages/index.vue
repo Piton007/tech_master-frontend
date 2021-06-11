@@ -27,7 +27,7 @@
             </v-form>
         </v-card-text>
         <v-card-actions>
-          <v-btn block color="primary" @click="login"> Ingresar</v-btn>
+          <v-btn block class="primary-gradient" @click="login"> Ingresar</v-btn>
         </v-card-actions>
       </v-card>
     </v-col>

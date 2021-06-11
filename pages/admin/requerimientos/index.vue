@@ -38,7 +38,7 @@
         <assign-admin :requerimientoCode="item.code" :disabled="item.status === 'Cerrado'" :assigned="item.supervisedBy" ></assign-admin>
     </template>
         <template v-slot:item.ver="{item}">
-        <v-icon @click.stop="clickRow(item)"> mdi-eye</v-icon>    
+        <v-icon @click.stop="clickRow(item) " color="info"> mdi-eye</v-icon>    
 
     </template>
   </v-data-table>

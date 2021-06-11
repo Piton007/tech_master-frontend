@@ -24,11 +24,13 @@
     </v-dialog>
     <v-breadcrumbs
       :items="breadcrumbs"
+      
       class="mb-2"
       divider="<"
     >
         <template v-slot:item="{ item }">
         <v-breadcrumbs-item
+            
             :to="item.href"
             router
             exact
@@ -42,7 +44,7 @@
     <v-row style="flex-wrap: no-wrap" >
         <v-col  md="4" sm="12">
             <v-card>
-                <v-card-title>
+                <v-card-title class="card-title">
                     <div>
                         Agente trabajando: {{(!requerimiento.supervisedBy)? "Nadie" : requerimiento.supervisedBy.firstName}}  
                     </div>
@@ -109,7 +111,7 @@
         </v-col>
         <v-col md="8" v-if="$vuetify.breakpoint.mdAndUp" >
             <v-card style="height:100%; overflow:hidden" >
-                <v-card-title > Bitácora de Requerimientos </v-card-title>
+                <v-card-title class="card-title" > Bitácora de Requerimientos </v-card-title>
                 <div class="secondary" style="height:100%;max-height:90vh;overflowY:scroll" >
                     <v-timeline dense align-top style="height:100%">
                         <v-timeline-item v-for="(log,index) in logs" :key="index" color="warning" class="mb-4 pr-6" >                            
@@ -143,7 +145,7 @@
     <v-row v-if="$vuetify.breakpoint.smAndDown">
         <v-col cols="12" >
                         <v-card style="height:100%; overflow:hidden" >
-                <v-card-title > Bitácora de Requerimientos </v-card-title>
+                <v-card-title  class="card-title"> Bitácora de Requerimientos </v-card-title>
                 <div class="secondary" style="height:100%;max-height:90vh;overflowY:scroll" >
                     <v-timeline dense align-top style="height:100%">
                         <v-timeline-item v-for="(log,index) in logs" :key="index" color="warning" class="mb-4 pr-6" >                            
