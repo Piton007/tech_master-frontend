@@ -10,6 +10,9 @@
     }"
     no-data-text="No hay usuarios disponibles"
     class="elevation-1"
+    :footer-props="{
+        'items-per-page-text':'Usuarios por página'
+    }"
   >
       <template v-slot:top>
         <v-toolbar flat>

@@ -10,6 +10,9 @@
     :header-props="{
         'sort-by-text':'Filtros'
     }"
+    :footer-props="{
+        'items-per-page-text':'Requerimientos por página'
+    }"
   >
   <data-table-header  sort-by-text="Buscar"></data-table-header>
     <template v-slot:top>

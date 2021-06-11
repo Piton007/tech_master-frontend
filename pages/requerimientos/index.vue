@@ -11,6 +11,9 @@
         'sort-by-text':'Filtros'
         }"
         no-data-text="No hay requerimientos disponibles"
+        :footer-props="{
+        'items-per-page-text':'Requerimientos por página'
+    }"
         class="elevation-1"
     >
         <template v-slot:top>
