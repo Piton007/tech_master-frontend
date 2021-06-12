@@ -40,8 +40,8 @@ export default {
             default:false
         },
         userId:{
-            type:Number,
-            default:-1
+            type:String,
+            default:""
         }
 
     },
@@ -51,6 +51,7 @@ export default {
     }),
     methods:{
         close(){
+            this.$refs.form.reset()
             this.$emit('input',false)
         },
         async submit(){
@@ -60,7 +61,7 @@ export default {
             }else{
                 await this.updatePassword()
             }
-            
+            this.close()            
         },
         async updatePassword(){
             try {
@@ -79,7 +80,7 @@ export default {
         async changePassword(){
             try {
                 let self = this
-                await changePass.bind(this)({user_id:userId,password:this.password})
+                await changePass.bind(this)({user_id:this.userId,password:this.password})
             } catch (error) {
                 
             }

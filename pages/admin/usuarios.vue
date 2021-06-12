@@ -1,7 +1,8 @@
 <template>
 <div v-if="!$fetch.pending">
+
   <v-data-table
-    :headers="headers"
+    :headers="($store.state.user.rol === 'admin') ? headersAdmin : headers"
     :items="$store.getters['users/getUsers']()"
     :items-per-page="5"
     :search="search"
@@ -29,6 +30,9 @@
     </template>
     <template v-slot:item.educationalInstitution="{item}">
         <div >{{(!item.educationalInstitution) ? "Ninguno" : item.educationalInstitution}}</div>
+    </template>
+    <template v-slot:item.reestablecer="{item}">
+        <v-btn color="primary" style="font-size:12px" @click="changePassword(item.id)" > Cambiar contraseña </v-btn>
     </template>
   </v-data-table>
   <v-dialog max-width="500" v-model="userDialog" >
@@ -186,7 +190,7 @@
     </div>
       
        
-  
+  <change-password :userId="userId" v-model="changePassDialog" onlyAdmin />
   </div>
 </template>
 
@@ -194,11 +198,12 @@
 import submitUser from "@/networking/users/create.user.js"
 import getAllRequerimientos from "@/networking/requerimientos/get.all.requerimientos"
 import ExportExcel from "@/components/export.users.excel"
-
+import ChangePassword from "@/components/change.password"
 
 export default {
    components:{
-     ExportExcel
+     ExportExcel,
+     ChangePassword
    },
     async fetch(){
         try {
@@ -217,7 +222,13 @@ export default {
   layout:"admin",
   data:()=>({
     search:"",
-    headers:[
+    userId: "",
+    headersAdmin:[
+            {
+        text:"Id",
+        align:" d-none",
+        value:"id",
+      },
       {
           text:"Nombre",
           align:"start",
@@ -254,9 +265,57 @@ export default {
           value:"fechaCreacion",
           sortable:true,
       },
+      {
+        text:"Acciones",
+        align:'center',
+        value:"reestablecer"
+      }
+    ],
+    headers:[
+      {
+        text:"Id",
+        align:" d-none",
+        value:"id",
+      },
+      {
+          text:"Nombre",
+          align:"start",
+          sortable:true,
+          value:'fullname'
+      },
+      {
+          text:"Email",
+          value:'email',
+          sortable:false,
+      },
+      {
+          text:"DNI",
+          value:'dni',
+          sortable:false,
+      },
+      {
+          text:"Rol",
+          value:'rol',
+          sortable:false,
+      },
+      {
+          text:"Prioridad",
+          value:"priority",
+          sortable:false,
+      },
+      {
+          text:"Institución",
+          value:"educationalInstitution",
+          sortable:true,
+      },
+      {
+          text:"Fecha Creación",
+          value:"fechaCreacion",
+          sortable:true,
+      }
     ],
     userDialog:false,
-    dialog:false,
+    changePassDialog:false,
     valid:true,
     dni:"",
     lastname:"",
@@ -264,6 +323,7 @@ export default {
     name:"",
     rol:"",
     email:"",
+    dialog:false,
     requerimientoId:"",
     institucion:"",
     tipo:"",
@@ -294,6 +354,7 @@ export default {
       ]
   },
   computed:{
+
      requerimientos(){
        return this.$store.getters["requerimientos/getRequerimientos"]().filter(x=>x.status !== "Cerrado").map(x=>({text:x.code,value:x.id}))
      },
@@ -302,6 +363,10 @@ export default {
      }
   },
   methods:{
+    changePassword(userId){
+      this.userId = userId.toString()
+      this.changePassDialog = true
+    },
     reset(){
         this.$refs.form.reset()
         this.institucion = ""
