@@ -17,9 +17,11 @@
               >
               </v-text-field>
                 <v-text-field
-                type="password"
+                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" 
+                :type="show ? 'text' : 'password'"
                 prepend-icon="mdi-lock"
                 v-model="password"
+                @click:append="show = !show"
                 :rules="[v=> !!v || '*Campo obligatorio']"
                 label="Password"
               >
@@ -32,19 +34,25 @@
       </v-card>
     </v-col>
   </v-row>
-    
+  <change-password v-model="dialog" >
+  </change-password>  
 </div>
 </template>
 
 <script>
 import loginUser from "@/networking/users/login.user"
 import {saveLocalStorage} from "@/utils/check.token.js"
+import ChangePassword from "@/components/change.password"
 
 export default {
-
+  components:{
+    ChangePassword
+  },
   data:()=>({
+    dialog:false,
     email:"",
-    password:""
+    password:"",
+    show:false,
   }),
   methods:{
     async login(){
@@ -53,6 +61,10 @@ export default {
           const user  = await loginUser.bind(this)({email:this.email,password:this.password})
           this.$store.commit("user/set",user)
           saveLocalStorage(this.$cookies,user)
+          if(!user.confirmed){
+            this.dialog = true
+            return
+          }
           if(["admin","tech"].some(x=>user.rol === x)){
               this.$router.push({path:"/admin/requerimientos/"})
           }else{
@@ -60,13 +72,7 @@ export default {
           }
         } catch (error) {
           
-        }
-      
-        
-         
-      
-      
-        
+        }  
     }
   }
 }

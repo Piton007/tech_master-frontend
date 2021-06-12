@@ -5,7 +5,8 @@ export const state = () => ({
     rol:"",
     token:"",
     email:"",
-    id:""
+    id:"",
+    confirmed:false
 })
 
 export const getters = {
@@ -20,6 +21,10 @@ export const mutations = {
         state.token = user.token
         state.email = user.email
         state.id = user.id
+        state.confirmed = user.confirmed
     },
+    updatePassword(state){
+        state.confirmed = true
+    }
     
 }
