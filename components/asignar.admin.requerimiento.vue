@@ -82,21 +82,14 @@ export default {
     methods:{
       
         async assign(){
-            try {
                 if(!this.$refs.form.validate()) return 
                 const requerimiento = await assignRequerimiento.bind(this)({
                 requerimiento_code:this.requerimientoCode,
                 user_id:this.user})
                 this.$store.commit("requerimientos/spliceById",requerimiento)
-            } catch (error) {
-                this.$swal({
-                icon:"error",
-                title: 'Error',
-                text: error
-                })
-            }finally{
+
                 this.dialog=false
-            }
+            
         },
 
         

@@ -256,17 +256,12 @@ export default {
     },
     async fetch(){
         try {
-            const requerimientos = await getAllRequerimientos.bind(this.$axios)(this.$cookies)
-            this.$store.commit("requerimientos/set",requerimientos)
-        } catch (e) {
-            console.log(e)
-                                      this.$swal({
-                icon:"error",
-                title: 'Error',
-                text: e
-                })    
-        } 
-        
+                    const requerimientos = await getAllRequerimientos.bind(this.$axios)(this.$cookies)
+        this.$store.commit("requerimientos/set",requerimientos)
+        } catch (error) {
+            
+        }
+
     },
     data:()=>({
         dialog:false,
@@ -390,8 +385,8 @@ export default {
         },
         
         async save(){
-            if(!this.$refs.form.validate()) return 
             try {
+                if(!this.$refs.form.validate()) return 
                 const description = `
                 Nombre Completo: ${this.name} ${this.lastname}
                 DNI:${this.dni}
@@ -410,16 +405,15 @@ export default {
                     this.servicio,this.tipoUsuario,this.dni,this.email,this.name,this.lastname,this.institucion,this.priority]                
                 })
                 this.$store.commit("requerimientos/add",requerimientos)
+
+               
             } catch (error) {
-                console.log(error.message)
-                this.$swal({
-                icon:"error",
-                title: 'Error',
-                text: error
-                })
-            }finally {
-                this.reset()
+                
+            }finally{
+                 this.reset()
             }
+         
+            
 
         }
     }

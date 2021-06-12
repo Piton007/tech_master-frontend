@@ -5,6 +5,8 @@ export default function (store) {
         }
 }).then((response)=>{
             return response.data.data
+    }).catch((err)=>{
+        console.log(err)
     })
 
 

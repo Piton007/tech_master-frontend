@@ -11,10 +11,10 @@ export default function ({ route, store, redirect, $cookies,from }) {
 
     const user = restoreFromLocalStorage($cookies)
     if (!user){
-        redirect("/"); return
+        return
     }
     if (!user.token){
-        redirect("/"); return
+         return
     }
 
     store.commit("user/set",user)

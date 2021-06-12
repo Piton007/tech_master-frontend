@@ -254,8 +254,8 @@ export default {
     },
     methods:{
         async submitComment(){
-            if(!this.$refs.formComment.validate()) return
             try {
+               if(!this.$refs.formComment.validate()) return
                 this.newCommentLoading = true
                 const requerimiento = await addComment.bind(this)({
                     user_id:this.$store.state.user.id,
@@ -268,18 +268,18 @@ export default {
                     title:"Nuevo comentario",
                     text:"Se ha agregado un nuevo comentario"
 
-                })
+                }) 
             } catch (error) {
-                this.$swal({
-                icon:"error",
-                title: 'Error',
-                text: error
-                })
+                
             }finally{
-                this.$refs.formComment.reset()
+         this.$refs.formComment.reset()
                 this.newCommentLoading = false
                 this.dialog = false
             }
+            
+
+       
+            
         },
         reset(){
             this.comment = ""
@@ -290,18 +290,18 @@ export default {
         },
         async resolve(){
             try {
-                const requerimiento = await resolveRequerimiento.bind(this)({requerimiento_code:this.requerimiento.code,comment:this.comment})
+                 const requerimiento = await resolveRequerimiento.bind(this)({requerimiento_code:this.requerimiento.code,comment:this.comment})
                 this.$store.commit("requerimientos/spliceById",requerimiento)
+
             } catch (error) {
-                this.$swal({
-                icon:"error",
-                title: 'Error',
-                text: error
-                })
+                
             }finally{
+
                 this.reset()
                 this.dialog = false
             }
+               
+            
         },
 
     }

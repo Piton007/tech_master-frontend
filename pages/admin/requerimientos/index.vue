@@ -59,8 +59,8 @@ export default {
     },
     layout:"admin",
     async fetch(){
-        try {
-            let requerimientos 
+            try {
+                            let requerimientos 
             if (this.$store.getters["user/getRol"]() === "admin"){
                 const [req,_] = await Promise.all([
                 getAllRequerimientos.bind(this.$axios)(this.$cookies),
@@ -73,15 +73,10 @@ export default {
             
             
             this.$store.commit("requerimientos/set",requerimientos)
-        } catch (e) {
-            console.log(e)
-                             this.$swal({
-                icon:"error",
-                title: 'Error',
-                text: e
-                })
-       
-        } 
+            } catch (error) {
+                
+            }
+
         
     },
     beforeMount(){

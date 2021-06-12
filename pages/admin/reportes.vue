@@ -60,14 +60,11 @@ export default {
         try {
             const requerimientos = await getAllRequerimientos.bind(this.$axios)(this.$cookies)
             this.$store.commit("requerimientos/set",requerimientos)
-        } catch (e) {
-            console.log(e)
-                            this.$swal({
-                icon:"error",
-                title: 'Error',
-                text: e
-                })       
-        } 
+        } catch (error) {
+            
+        }
+        
+        
         
     },
     data:()=>({

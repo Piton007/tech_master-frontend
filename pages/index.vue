@@ -48,27 +48,24 @@ export default {
   }),
   methods:{
     async login(){
-        if (!this.$refs.form.validate())return
         try {
+          if (!this.$refs.form.validate())return
           const user  = await loginUser.bind(this)({email:this.email,password:this.password})
           this.$store.commit("user/set",user)
           saveLocalStorage(this.$cookies,user)
           if(["admin","tech"].some(x=>user.rol === x)){
-            this.$router.push({path:"/admin/requerimientos/"})
+              this.$router.push({path:"/admin/requerimientos/"})
           }else{
-            this.$router.push({path:"/requerimientos/"})
+              this.$router.push({path:"/requerimientos/"})
           }
-         
-          
         } catch (error) {
-          console.log(error)
-            this.$swal({
-              icon:"error",
-              title: 'Error',
-              text: error
-            })
-        }finally {
+          
         }
+      
+        
+         
+      
+      
         
     }
   }

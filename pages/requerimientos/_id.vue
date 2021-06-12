@@ -256,8 +256,9 @@ export default {
     },
     methods:{
         async submitComment(){
-            if(!this.$refs.formComment.validate()) return
             try {
+                if(!this.$refs.formComment.validate()) return
+            
                 this.newCommentLoading = true
                 const requerimiento = await addComment.bind(this)({
                     user_id:this.$store.state.user.id,
@@ -272,16 +273,17 @@ export default {
 
                 })
             } catch (error) {
-                this.$swal({
-                icon:"error",
-                title: 'Error',
-                text: error
-                })
-            }finally{
+                
+            }finally {
+            
+           
                 this.$refs.formComment.reset()
                 this.newCommentLoading = false
                 this.dialog = false
             }
+
+
+            
         },
         reset(){
             this.decision = ""
@@ -295,18 +297,16 @@ export default {
                 comment: this.comment,
             })
             this.$store.commit("requerimientos/spliceById",requerimiento)
-            }
-             
-            catch (error) {
-                this.$swal({
-                icon:"error",
-                title: 'Error',
-                text: error
-                })
+                
+            } catch (error) {
+                
             }finally{
                 this.reset()
                 this.dialog = false
             }
+
+
+            
 
         },
         showDialog(decision){

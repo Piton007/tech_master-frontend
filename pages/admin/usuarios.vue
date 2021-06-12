@@ -202,20 +202,16 @@ export default {
    },
     async fetch(){
         try {
-            const [requerimientos,_] = await Promise.all([
+          const [requerimientos,_] = await Promise.all([
                 getAllRequerimientos.bind(this.$axios)(this.$cookies),
                 this.$store.dispatch("users/getUsers")
                 ])
             this.$store.commit("requerimientos/set",requerimientos)
-        } catch (e) {
-            console.log(e)
-                             this.$swal({
-                icon:"error",
-                title: 'Error',
-                text: e
-                })
-       
-        } 
+        } catch (error) {
+          
+        }
+         
+      
         
     },
   layout:"admin",
@@ -311,8 +307,8 @@ export default {
         this.institucion = ""
     },
     async submit(){
-      if (this.$refs.form.validate()){
-          try {
+      try {
+              if (this.$refs.form.validate()){
             const user = await submitUser.bind(this)({
             first_name:this.name,
             last_name:this.lastname,
@@ -322,20 +318,16 @@ export default {
             email:this.email,educational_institution:this.institucion,priority:this.priority})
             this.newPassword = user.password
             this.$store.commit("users/add",user)
-            this.userDialog = false
-            this.dialog = true
-          } catch (error) {
-            const {response:{data}} = error
-            const errors = Object.entries(data.errors).map(([key,value])=>`${key}: ${value}`)
-            this.$swal({
-              icon:"error",
-              titleText: data.msg,
-              text:  errors.join("\n")
-            })
-          }finally {
-            this.reset()
-          }
+            this.dialog = true          
       } 
+      } catch (error) {
+        
+      }finally {
+          this.reset()
+          this.userDialog = false
+
+      }
+
     }
   }
 
