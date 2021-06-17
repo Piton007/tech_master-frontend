@@ -35,6 +35,8 @@
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
            <img   src="/logo.png" width="110"/>
+           <div class="nav-bar-user text-h6">Hola {{$store.getters['user/getName']()}}</div>
+
     </v-app-bar>
     <v-main style="position:relative">
       <v-container >
