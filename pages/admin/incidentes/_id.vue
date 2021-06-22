@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!$fetch.pending">
     <v-breadcrumbs
       :items="breadcrumbs"
       class="mb-2"
@@ -49,6 +49,29 @@ import Resolve from "@/components/molecules/incidentes/resolve.vue"
 
 export default {
     layout:"admin",
+    async fetch(){
+        if(!this.$store.state.incidentes.list.length) {
+            await this.$router.replace("/admin/incidentes")
+            return
+        }
+    try {
+
+        await Promise.all(
+            [
+                this.$store.dispatch("priorities/fetchAll"),
+                this.$store.dispatch("categories/fetchAll"),
+                this.$store.dispatch("users/getUsers"),
+                this.$store.dispatch("incidentes/fetchAll"),
+
+            ]
+        )
+        const req = this.$store.state.incidentes.list.find(x=>x.code === this.$route.params.id)
+        if(!req)
+           await this.$router.replace("/admin/incidentes")
+        } catch (error) {
+            await this.$router.replace("/admin/incidentes")
+        }
+    },
     components:{
         Logs,
         ViewInfo,

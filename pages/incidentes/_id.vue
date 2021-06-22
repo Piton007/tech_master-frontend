@@ -49,6 +49,29 @@ import Verify from "@/components/atoms/incidentes/verify"
 
 export default {
     layout:"client",
+        async fetch(){
+        if(!this.$store.state.incidentes.list.length) {
+            await this.$router.replace("/incidentes")
+            return
+        }
+    try {
+
+        await Promise.all(
+            [
+                this.$store.dispatch("priorities/fetchAll"),
+                this.$store.dispatch("categories/fetchAll"),
+                this.$store.dispatch("users/getUsers"),
+                this.$store.dispatch("incidentes/fetchAll"),
+
+            ]
+        )
+        const req = this.$store.state.incidentes.list.find(x=>x.code === this.$route.params.id)
+        if(!req)
+           await this.$router.replace("/incidentes")
+        } catch (error) {
+            await this.$router.replace("/incidentes")
+        }
+    },
     components:{
         Verify,
         Logs,

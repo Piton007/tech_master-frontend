@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="!$fetch.pending">
     <v-dialog v-model="dialog" min-width="350" max-width="500">
         <v-card >
             <v-card-title style="justify-content:space-between">

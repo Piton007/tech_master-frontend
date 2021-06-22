@@ -76,12 +76,7 @@ export default {
                 sortable:false,
                 value:'estimated',
             },
-            {
-                text:'Ver más',
-                value:"ver",
-                align:"center",
-                sortable:false
-            }   
+           
         ]
     }),
     methods:{

@@ -81,7 +81,8 @@ function assembleVM(category){
         category: category.categoria,
         subCategory:category.subcategoria || "",
         priority:category.prioridad,
-        sla: category.sla
+        sla: category.sla,
+        fechaCreacion:category.fechaCreacion
     }
 }
 function addItem(value) {
