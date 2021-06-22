@@ -25,12 +25,7 @@ const ADMIN_USUARIOS = {
   name:"admin-usuarios"
 }
 
-const ADMIN_REPORTES_REQUERIMIENTOS = {
-  icon: 'mdi-file-chart',
-  title: 'Reporte de Requerimientos',
-  to: '/admin/reportes',
-  name:"admin-reportes"
-}
+
 
 const CLIENT_REQUERIMIENTOS = {
   icon: 'mdi-clipboard-alert',
@@ -65,7 +60,6 @@ const rols = {
           ADMIN_REQUERIMIENTOS,
           ADMIN_INCIDENTES,
           ADMIN_USUARIOS,
-          ADMIN_REPORTES_REQUERIMIENTOS,
           ADMIN_CATEGORIES,
           LOGOUT
     ],
