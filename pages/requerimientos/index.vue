@@ -169,6 +169,7 @@
                                 Eliminar
                             </v-btn>
                             </div>
+                            <p  class="mt-2 red--text"> *Adjunte archivos para atenderlo mas rápido</p>
 
                             </v-col>
                          

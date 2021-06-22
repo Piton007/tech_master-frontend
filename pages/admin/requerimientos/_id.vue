@@ -257,12 +257,13 @@ export default {
             try {
                if(!this.$refs.formComment.validate()) return
                 this.newCommentLoading = true
-                const requerimiento = await addComment.bind(this)({
+                
+                const _requerimiento = await addComment.bind(this)({
                     user_id:this.$store.state.user.id,
                     requerimiento_code:this.requerimiento.code,
                     comment:this.newComment}
                     )
-                this.$store.commit("requerimientos/spliceById",requerimiento)
+                this.$store.commit("requerimientos/spliceById",_requerimiento)
                 this.$swal({
                     icon:"success",
                     title:"Nuevo comentario",
@@ -270,7 +271,7 @@ export default {
 
                 }) 
             } catch (error) {
-                
+                console.log(error)
             }finally{
          this.$refs.formComment.reset()
                 this.newCommentLoading = false

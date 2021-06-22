@@ -4,6 +4,20 @@ const ADMIN_REQUERIMIENTOS = {
   to: '/admin/requerimientos',
   name:"admin-requerimientos"
 }
+
+const ADMIN_INCIDENTES = {
+  icon: 'mdi-alert',
+  title: 'Incidentes',
+  to: '/admin/incidentes',
+  name:"admin-incidentes"
+}
+
+const ADMIN_CATEGORIES = {
+  icon: 'mdi-tag',
+  title:'Categorías',
+  to:'/admin/categorias',
+  name:'admin-categorias'
+}
 const ADMIN_USUARIOS = {
   icon: 'mdi-account',
   title: 'Usuarios',
@@ -25,6 +39,13 @@ const CLIENT_REQUERIMIENTOS = {
   to: '/requerimientos'
 }
 
+const INCIDENTES = {
+  icon: 'mdi-alert',
+  title: 'Mis incidentes',
+  name:"incidentes",
+  to: '/incidentes'
+}
+
 const LOGOUT =  {
   icon: 'mdi-logout',
   title: 'Salir',
@@ -36,21 +57,26 @@ const LOGOUT =  {
 const rols = {
     tech :[
           ADMIN_REQUERIMIENTOS,
+          ADMIN_INCIDENTES,
           ADMIN_USUARIOS,
           LOGOUT
     ],
     admin: [
           ADMIN_REQUERIMIENTOS,
+          ADMIN_INCIDENTES,
           ADMIN_USUARIOS,
           ADMIN_REPORTES_REQUERIMIENTOS,
+          ADMIN_CATEGORIES,
           LOGOUT
     ],
     teacher: [
           CLIENT_REQUERIMIENTOS,
+          INCIDENTES, 
           LOGOUT
     ],
     volunteer: [
         CLIENT_REQUERIMIENTOS,
+        INCIDENTES,
         LOGOUT
     ]
 

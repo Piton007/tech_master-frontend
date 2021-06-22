@@ -97,12 +97,7 @@ export default {
     computed:{
         userOptions(){
             const users = [...this.$store.state.users.list]            
-            return users.filter(x=>x.rol === 'Admin' || x.rol === "Técnico").map((x)=>{
-               if(x.email === this.$store.state.user.email)
-                    return {
-                        text: "Yo",
-                        value: x.id
-                    }               
+            return users.filter(x=>x.rol === 'Admin' || x.rol === "Técnico").map((x)=>{            
                return { text:`${x.firstName} ${x.lastName}`,
                 value: x.id}
             })

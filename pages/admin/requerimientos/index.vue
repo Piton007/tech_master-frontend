@@ -1,4 +1,7 @@
 <template>
+<div>
+
+
     <v-data-table
     v-if="!$fetch.pending"
     :headers="headers"
@@ -31,7 +34,7 @@
         <div>Creación de usuario</div>
     </template>
     <template v-slot:item.supervisedBy="{item}">
-        <div v-if="!!item.supervisedBy">{{(item.supervisedBy.email === $store.state.user.email) ? 'Yo' :item.supervisedBy.firstName}}</div>
+        <div v-if="!!item.supervisedBy">{{item.supervisedBy.firstName}} {{item.supervisedBy.lastName}}</div>
         <template v-else>
             <assign-tech v-if="$store.state.user.rol === 'tech'" :requerimientoCode="item.code" ></assign-tech>
             <div v-else> Nadie</div>
@@ -45,17 +48,25 @@
 
     </template>
   </v-data-table>
+    <div v-if="$store.state.user.rol === 'admin'">
+       <export-requerimiento    class="my-3 mr-2"
+            style="float:right"   />
+  </div>
+  </div>
 </template>
 
 <script>
 import getAllRequerimientos from "@/networking/requerimientos/get.all.requerimientos"
 import AssignAdmin from "@/components/asignar.admin.requerimiento"
 import AssignTech from "@/components/asignar.tech.requerimiento"
+import ExportRequerimiento from "@/components/export.requerimiento.excel.vue"
+
 
 export default {
     components:{
         AssignAdmin,
-        AssignTech
+        AssignTech,
+        ExportRequerimiento
     },
     layout:"admin",
     async fetch(){

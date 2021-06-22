@@ -240,14 +240,11 @@ export default {
         },
         requerimiento(){
             return this.$store.state.requerimientos.list.find(x=>x.code === this.$route.params.id)
-                  
-            
         },
         documents(){
             return this.requerimiento.documents.map(x=>({link:generateLink(x),urn:x}))
         },
         breadcrumbs(){
-            
             return [
                 {text:'requerimientos',disabled:false,href:"/requerimientos"},
                 {text:this.requerimiento.code,disabled:true}
