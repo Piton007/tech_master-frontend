@@ -89,6 +89,12 @@ export default {
             this.$refs.files.reset()
         }
     },
+     computed:{
+        
+        actualCategory(){
+            return this.$store.getters["categories/findByOne"]({service:this.service,category:this.category,subcategory:this.subcategory})
+        }
+    },
     methods:{
         async submit(){
 
@@ -101,16 +107,12 @@ export default {
                     documents: this.$refs.files.getURLS()
                 })
             } catch (error) {
-                this.dialog = false
+                
             }
+            this.dialog = false
         }
     },
-    computed:{
-        
-        actualCategory(){
-            return this.$store.getters["categories/findByOne"]({service:this.service,category:this.category,subcategory:this.subcategory})
-        }
-    }
+   
 }
 </script>
 

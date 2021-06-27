@@ -34,7 +34,7 @@
         </div>    
         <div v-if="!!item.supervisedBy">{{item.supervisedBy.firstName}} {{item.supervisedBy.lastName}}</div>
         <div>
-          <assign-tech v-if="!item.supervisedBy && $store.state.user.rol === 'admin'" :code="item.code"/>
+          <assign-tech v-if="!item.supervisedBy && $store.state.user.rol === 'tech'" :code="item.code"/>
         </div>
       </div>
 
@@ -180,6 +180,7 @@ export default {
         
         const now = dayjs().utcOffset(-5).format("YYYY/MM/DD HH:mm:ss")
         const end = dayjs(now,"YYYY/MM/DD HH:mm:ss")
+        console.log(item)
         if (end.diff(item.fechaCreacion) < 1 && item.estado !== "Cerrado")
           return "red"
     }

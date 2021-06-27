@@ -30,7 +30,6 @@ export default {
     computed:{
         users(){
             let users = [...this.$store.state.users.list]
-            console.log(users)
             if (this.assign)
                 users = users.filter(x=>x.rol.toLocaleLowerCase() === 'admin' || x.rol.toLocaleLowerCase() === 'técnico')            
             

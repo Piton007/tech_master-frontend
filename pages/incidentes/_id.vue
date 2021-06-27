@@ -89,9 +89,10 @@ export default {
             return this.$store.state.incidentes.list.find(x=>x.code === this.$route.params.id)
         },
         breadcrumbs(){
+            const code = this.incidente.code
             return [
                 {text:'incidentes',disabled:false,href:"/incidentes"},
-                {text:this.incidente.code,disabled:true}
+                {text:code,disabled:true}
             ]
         }
     }

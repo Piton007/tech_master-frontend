@@ -1,6 +1,6 @@
 <template>
   <div v-if="!$fetch.pending">
-      <incidentes :admin="$store.state.user.rol === 'admin'"/>
+      <incidentes admin/>
       <div style="float:right;" class="my-3 mr-2" v-if="$store.state.user.rol === 'teacher' || $store.state.user.rol=== 'volunteer'">
         <add-incidente />
       </div>
