@@ -180,8 +180,7 @@ export default {
         
         const now = dayjs().utcOffset(-5).format("YYYY/MM/DD HH:mm:ss")
         const end = dayjs(now,"YYYY/MM/DD HH:mm:ss")
-        console.log(item)
-        if (end.diff(item.fechaCreacion) < 1 && item.estado !== "Cerrado")
+        if (end.diff(item.fechaCreacion) < 0 && item.estado !== "Cerrado")
           return "red"
     }
   }

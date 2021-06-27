@@ -32,7 +32,7 @@ export const mutations = {
 
     },
     add(state,incidente){
-        state.list.push(assembleVM(incidente))
+        state.list.unshift(assembleVM(incidente))
     },
     spliceById(state,incidente){
         const index = state.list.findIndex(x=>x.code === incidente.code)

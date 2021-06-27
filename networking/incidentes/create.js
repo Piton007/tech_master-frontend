@@ -4,7 +4,7 @@ export default function (incidente,token) {
             Authorization: "Bearer "+token
         }
     }).then((response)=>{
-            return response.data
+            return response.data.data
     }).catch((err)=>{
         console.log(err)
     })
