@@ -42,8 +42,8 @@
       <template v-slot:item.ver="{item}">
             <v-icon @click.stop="clickRow(item)" color="info"> mdi-eye</v-icon>    
       </template>
-      <template v-slot:item.affected.priority="{item}">
-        {{(item.affected.priority == 'high') ? 'Alta' : (item.affected.priority == 'medium') ? 'Media' : 'Baja'}}    
+      <template v-slot:item.affectedBy.priority="{item}">
+        {{(item.affectedBy.priority == 'high') ? 'Alta' : (item.affectedBy.priority == 'medium') ? 'Media' : 'Baja'}}    
       </template>
       <template v-slot:item.asignar="{item}">
         <assign-admin :code="item.code" :disabled="item.status === 'Cerrado'"></assign-admin>
@@ -110,7 +110,7 @@ export default {
       {
         text:"Prioridad",
         align:"start",
-        value:"affected.priority"
+        value:"affectedBy.priority"
       },
       {
         text:"Responsable",
@@ -161,7 +161,7 @@ export default {
       {
         text:"Prioridad",
         align:"start",
-        value:"affected.priority"
+           value:"affectedBy.priority"
       },
       {
         text:"Responsable",
@@ -218,7 +218,7 @@ export default {
       {
         text:"Prioridad",
         align:"start",
-        value:"affected.priority"
+           value:"affectedBy.priority"
       },
       {
         text:"Responsable",
@@ -269,7 +269,7 @@ export default {
       {
         text:"Prioridad",
         align:"start",
-        value:"affected.priority"
+          value:"affectedBy.priority"
       },
       {
         text:"Responsable",
@@ -306,7 +306,7 @@ export default {
   },
   methods:{
     clickRow(item,data){
-      if(!this.admin)
+      if(this.$store.state.rol === 'volunteer' || this.$store.state.rol === 'teacher')
         this.$router.push({path:"/incidentes/"+item.code})
       else
         this.$router.push({path:"/admin/incidentes/"+item.code})

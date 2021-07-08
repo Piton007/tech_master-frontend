@@ -44,8 +44,8 @@ export const getters = {
 export const mutations = {
     set(state,incidentes){
         state.list = incidentes.sort((a,b)=>{
-            const aPriority = PRIORITIES.find(x=> x[0] === a.category.prioridad.label && x[1] === a.affected.priority)[2]
-            const bPriority = PRIORITIES.find(x=> x[0] === b.category.prioridad.label && x[1] === b.affected.priority)[2]
+            const aPriority = PRIORITIES.find(x=> x[0] === a.category.prioridad.label && x[1] === a.affectedBy.priority)[2]
+            const bPriority = PRIORITIES.find(x=> x[0] === b.category.prioridad.label && x[1] === b.affectedBy.priority)[2]
             return aPriority- bPriority 
 
         }).map(assembleVM)

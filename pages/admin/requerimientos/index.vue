@@ -36,7 +36,6 @@
     <template v-slot:item.supervisedBy="{item}">
         <div v-if="!!item.supervisedBy">{{item.supervisedBy.firstName}} {{item.supervisedBy.lastName}}</div>
         <template v-else>
-            <div>{{$store.state.user.rol.includes('tech')}}</div>
             <assign-tech v-if="$store.state.user.rol.includes('tech')" :requerimientoCode="item.code" ></assign-tech>
             <div v-else> Nadie</div>
         </template>
