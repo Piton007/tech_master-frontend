@@ -93,6 +93,18 @@
                         >
                         <v-text-field
                             
+                            v-model="cel"
+                            :rules="[v=>v=> !!v || '*Campo obligatorio']"
+                            label="Teléfono"
+                        >
+                        </v-text-field>
+                        </v-col>
+                        <v-col
+                            cols="12"
+                            v-if="servicio === 'Crear usuario'"
+                        >
+                        <v-text-field
+                            
                             v-model="dni"
                             :rules="[v=> /^[0-9]{8}$/.test(v) || 'Ingresa un dni válido', v=> !!v || '*Campo obligatorio']"
                             label="DNI"
@@ -265,6 +277,7 @@ export default {
 
     },
     data:()=>({
+        cel:"",
         dialog:false,
         search:"",
         files:[],
@@ -392,6 +405,7 @@ export default {
                 Nombre Completo: ${this.name} ${this.lastname}
                 DNI:${this.dni}
                 Email: ${this.email}
+                Teléfono: ${this.cel}
                 Tipo Usuario: ${this.tipoUsuario}
                 Institución: ${this.institucion}
                 Prioridad : ${this.prioridad}

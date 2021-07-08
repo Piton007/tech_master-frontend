@@ -44,6 +44,10 @@ export default {
                 callback: (value)=> (!value) ? "--" : value.subcategoria
             },
             "Afectado":"affected.dni",
+            "Nombre de afectado":{
+                field:"affected",
+                callback: (value)=> (!value) ? "--" : value.firstName + " " + value.lastName
+            },
             "Reportador Por":"creator.dni",
             "Estado":"status",
             "Prioridad": {               

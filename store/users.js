@@ -2,6 +2,7 @@ import getAllUser from "@/networking/users/get.all.user"
 const ROLS = {
     "admin":"Admin",
     "tech":"Técnico",
+    "tech_2":"Técnico II",
     "volunteer":"Voluntario",
     "teacher":"Maestro"
 }

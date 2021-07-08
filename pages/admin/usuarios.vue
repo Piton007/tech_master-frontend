@@ -64,6 +64,19 @@
               </v-col>
             </v-row>
             <v-row>
+              <v-col
+                  cols="12"
+              >
+              <v-text-field
+                  
+                  v-model="cel"
+                  :rules="[v=>v=> !!v || '*Campo obligatorio']"
+                  label="Teléfono"
+              >
+              </v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
               <v-col cols="12">
                 <v-text-field
                   prepend-icon="mdi-account-box-outline"
@@ -100,13 +113,18 @@
             </v-row>
               <v-row v-if="showInstitution">
               <v-col cols="12">
+              
                 <v-text-field
+                  v-if="tipo === 'teacher' "
                   v-model="institucion"
                   prepend-icon="mdi-school"
                   :rules="[v=> !!v || '*Campo obligatorio']"
                   label="Institución educativa"
                 >
                 </v-text-field>
+                <v-select v-else no-data-text="No existe datos" v-model="institucion"  
+                prepend-icon="mdi-school" :items="institutionsVolunteer" :rules="[v=> !!v || '*Campo obligatorio']" label="Institución educativa" ></v-select>
+
               </v-col>
             </v-row>
               <v-row>
@@ -221,6 +239,11 @@ export default {
     },
   layout:"admin",
   data:()=>({
+    cel:"",
+    institutionsVolunteer:[
+      {text:"Alianza",value:"Alianza"},
+      {text:"Libre",value:"Libre"}
+    ],
     search:"",
     userId: "",
     headersAdmin:[
@@ -344,7 +367,8 @@ export default {
       {text:"Maestro",value:"teacher"},
       {text:"Voluntario",value:"volunteer"},
       {text:"Técnico",value:"tech"},
-      {text:"Administrador",value:"admin"}
+      {text:"Administrador",value:"admin"},
+      {text:"Técnico II",value:"tech_2"}
       ]
       return
     }
@@ -372,12 +396,14 @@ export default {
         this.institucion = ""
     },
     async submit(){
+      if (!this.$refs.form.validate()) return;
       try {
               if (this.$refs.form.validate()){
             const user = await submitUser.bind(this)({
             first_name:this.name,
             last_name:this.lastname,
             dni:this.dni,
+            cel:this.cel,
             rol:this.tipo,
             requerimiento_id:this.requerimientoId,
             email:this.email,educational_institution:this.institucion,priority:this.priority})

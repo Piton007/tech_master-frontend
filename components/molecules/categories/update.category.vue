@@ -4,24 +4,12 @@
       width="500"
       min-width="350"
       >
-    <template v-slot:activator="{on,attrs}">
-        <v-btn
-            fab
-            color="primary"
-            dark
-            v-bind="attrs"
-            class="my-3 mr-2"
-            style="float:right"       
-            v-on="on"
-            >
-            <v-icon>mdi-plus</v-icon>
-        </v-btn>
     </template>
     <v-card>
-        <v-card-title>Crear categoría</v-card-title>
+        <v-card-title>Actualizar categoría</v-card-title>
         <v-divider></v-divider>
         <v-card-text>
-            <category-form ref="form" :categoryId=2></category-form>
+            <category-form ref="form" :categoryId="categoryId"></category-form>
         </v-card-text>
         <v-card-actions >
             <v-spacer></v-spacer>
@@ -50,6 +38,12 @@
 import CategoryForm from "@/components/molecules/categories/category.picker"
 
 export default {
+    props:{
+        categoryId:{
+            type:Number,
+            default:null
+        }
+    },
     components:{
         CategoryForm
     },
@@ -57,17 +51,17 @@ export default {
         dialog:false,
     }),
     methods:{
-        async create(){
+        async update(){
             if (!this.$refs.form.validate()) return
             try {
-                await this.$store.dispatch("categories/create",
+                await this.$store.dispatch("categories/update",
                     this.$refs.form.submit()
 
                 )
                 this.$swal({
                     icon:"success",
-                    title:"Nuevo categoría",
-                    text:"Se ha agregado una nueva categoria"
+                    title:"Actualización de categoría",
+                    text:"Se ha actualizado una categoria"
 
                 }) 
             } catch (error) {
@@ -79,13 +73,7 @@ export default {
         },
 
     },
-    watch:{
-        dialog(){
-            if(!this.$refs.form) return 
-            this.$refs.form.reset()
-        },
-
-    }
+   
 
 }
 

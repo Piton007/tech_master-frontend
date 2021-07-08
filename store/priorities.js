@@ -13,7 +13,7 @@ export const getters = {
 
 export const mutations = {
     set(state,priorities){
-       state.list = priorities
+       state.list = priorities.sort((a,b)=>a.sla - b.sla)
     }
     
 }

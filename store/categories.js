@@ -1,5 +1,7 @@
 import getAll from "@/networking/categories/get.all"
 import create from "@/networking/categories/create"
+import update from "@/networking/categories/update"
+
 
 
 export const state = () => ({
@@ -9,6 +11,9 @@ export const state = () => ({
 export const getters = {
     getAll: (state) => () =>{
         return state.list
+    },
+    findById:(state)=>(id)=>{
+        return state.list.find(x=>x.id === id)
     },
     findByOne:(state) => ({service,category,subcategory})=>{
         return state.list.find(x =>
@@ -47,7 +52,8 @@ export const mutations = {
     set(state,categories){
        state.list = categories.map(assembleVM).sort((a,b)=> a.priority.sla - b.priority.sla)
     },
-    update(state,index,category){
+    update(state,category){
+        const index = state.list.findIndex(x=>x.id === category.id)
         state.list[index] = assembleVM(category)
     },
     remove(state,index){
@@ -70,6 +76,12 @@ export const actions = {
         return create.bind(this)(category,rootState.user.token)
         .then((c)=>{
             commit("add",c)
+        })
+    },
+    update({commit,rootState},category){
+        return update.bind(this)(category,rootState.user.token)
+        .then((c)=>{
+            commit("update",c)
         })
     }
 }

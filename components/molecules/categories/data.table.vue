@@ -1,4 +1,5 @@
 <template>
+  <div> 
   <v-data-table
     :headers="headers"
     :items="$store.getters['categories/getAll']()"
@@ -30,26 +31,69 @@
             </v-text-field>
         </v-toolbar>
     </template>
-    <template v-slot:item.ver="{item}">
-        <v-icon @click.stop="clickRow(item)" color="info"> mdi-eye</v-icon>    
-    </template>
     <template v-slot:item.priority="{item}">
         {{item.priority.label}}
     </template>
     <template v-slot:item.estimated="{item}">
         {{item.priority.sla}} h
     </template>
+    <template v-slot:item.edit="{item}">
+            <v-icon @click.stop="clickRow(item)" color="info"> mdi-pencil</v-icon>    
+      </template>
 
   </v-data-table>
+    <v-dialog v-model="editDialog"
+      persistent      
+      width="500"
+      min-width="350"
+      >
+    <v-card>
+        <v-card-title>Actualizar categoría</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+            <category-form ref="form" :categoryId="categoryId"></category-form>
+        </v-card-text>
+        <v-card-actions >
+            <v-spacer></v-spacer>
+          <v-btn
+              color="blue darken-1"
+              text
+              @click="editDialog=false"
+          >
+              Cerrar
+          </v-btn>
+          <v-btn
+              color="blue darken-1"
+              text
+              @click="update"
+          >
+              Actualizar
+          </v-btn>
+        </v-card-actions>
+    </v-card>
+
+  </v-dialog>
+  </div>
 </template>
 
 <script>
+import CategoryForm from "@/components/molecules/categories/category.picker"
 
 export default {
+    components:{
+        CategoryForm
+    },
     data:()=>({
+        categoryId:-1,
+        editDialog:false,
         search:"",
-        categoryDialog:false,
         headers:[
+            {
+                text:"Id",
+                align:" d-none",
+                sortable:true,
+                value:"id"
+            },
             {
                 text:'Servicio',
                 align:'start',
@@ -64,7 +108,7 @@ export default {
             },
 
             {
-                text:'Prioridad',
+                text:'Impacto',
                 align:'center',
                 sortable:true,
                 value:'priority',
@@ -76,10 +120,38 @@ export default {
                 sortable:false,
                 value:'estimated',
             },
+            {
+                text:"Editar",
+                align:"start",
+                value:"edit"
+            }
            
         ]
     }),
     methods:{
+            async update(){
+                if (!this.$refs.form.validate()) return
+                try {
+                    await this.$store.dispatch("categories/update",
+                        {
+                            ...this.$refs.form.submit(),
+                            category_id:this.categoryId
+                        }
+
+                    )
+                    this.$swal({
+                        icon:"success",
+                        title:"Actualización de categoría",
+                        text:"Se ha actualizado una categoria"
+
+                    }) 
+                } catch (error) {
+                    
+                }finally{
+                    this.editDialog = false
+                }
+            
+        },
         customFilter(value, search, item) {
             if (typeof value === 'object')
                 return value.label.toString().toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) !== -1  || value.sla.toString().toLocaleLowerCase().indexOf(search.toLocaleLowerCase()) !== -1      
@@ -90,9 +162,12 @@ export default {
            
         },
         clickRow(e){
-            this.dialog = true
+            this.categoryId = e.id
+            this.editDialog = true
+            
         }
-    }
+    },
+    
     
 }
 </script>
