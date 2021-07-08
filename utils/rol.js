@@ -56,6 +56,12 @@ const rols = {
           ADMIN_USUARIOS,
           LOGOUT
     ],
+    tech_2:[
+        ADMIN_REQUERIMIENTOS,
+        ADMIN_INCIDENTES,
+        ADMIN_USUARIOS,
+        LOGOUT
+    ],
     admin: [
           ADMIN_REQUERIMIENTOS,
           ADMIN_INCIDENTES,
@@ -112,9 +118,10 @@ export const getPathRolHome = (path,rol) => {
   if(rol=== 'admin'){
     return checkAdminNavigation(path)
   }
-  if(rol === "tech"){
+  if(rol === "tech" || rol === "tech_2" ){
     return checkTechNavigation(path)
   }
+
   if(rol === "teacher"){
     return checkTeacherNavigation(path)
   }

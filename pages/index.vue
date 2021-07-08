@@ -65,7 +65,7 @@ export default {
             this.dialog = true
             return
           }
-          if(["admin","tech"].some(x=>user.rol === x)){
+          if(["admin","tech","tech_2"].some(x=>user.rol === x)){
               this.$router.push({path:"/admin/requerimientos/"})
           }else{
               this.$router.push({path:"/requerimientos/"})

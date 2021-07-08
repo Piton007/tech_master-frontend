@@ -11,8 +11,10 @@
 export default {
     props:{
         assign:{
-            type:Boolean,
-            default:false,
+            type:Array,
+            default:function(){
+                return []
+            },
         },
         value:{
             type:Number,
@@ -30,8 +32,7 @@ export default {
     computed:{
         users(){
             let users = [...this.$store.state.users.list]
-            if (this.assign)
-                users = users.filter(x=>x.rol.toLocaleLowerCase() === 'admin' || x.rol.toLocaleLowerCase() === 'técnico')            
+            users = users.filter(x=> this.assign.some(y=>x.rol.toLocaleLowerCase() === y.toLocaleLowerCase()))            
             
             return users.map((x)=>(             
                { text:`${x.firstName} ${x.lastName}`,

@@ -17,7 +17,7 @@
         <v-card-title>Asignar</v-card-title>
         <v-card-text>
             <v-form ref="form">
-                <user-picker :assign="['admin','técnico']" v-model="user"></user-picker>
+                <user-picker :assign="['técnico II']" v-model="user"></user-picker>
             </v-form>
         </v-card-text>
         <v-card-actions>

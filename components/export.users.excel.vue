@@ -24,6 +24,7 @@ export default {
             "DNI":"dni",
             "Rol":"rol",
             "Prioridad":"priority",
+            "Teléfono":"cel",
             "Institución":"educationalInstitution",
             "Usuario solicitante":{
                 field:"log",

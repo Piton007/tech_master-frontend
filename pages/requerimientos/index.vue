@@ -92,7 +92,7 @@
                             v-if="servicio === 'Crear usuario'"
                         >
                         <v-text-field
-                            
+                           
                             v-model="cel"
                             :rules="[v=>v=> !!v || '*Campo obligatorio']"
                             label="Teléfono"

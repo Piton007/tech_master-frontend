@@ -16,6 +16,21 @@ const STATUS = {
     "closed":"Cerrado"
 }
 
+const PRIORITIES = [
+    ['Crítico','high',1],
+    ['Crítico','medium',2],
+    ['Crítico','low',3],
+    ['Alto','high',4],
+    ['Alto','medium',5],
+    ['Alto','low',6],
+    ['Medio','high',7],
+    ['Medio','medium',8],
+    ['Medio','low',9],
+    ['Bajo','high',10],
+    ['Bajo','medium',11],
+    ['Bajo','low',12]
+
+]
 
 export const state = () => ({
     list: []
@@ -28,7 +43,12 @@ export const getters = {
 }
 export const mutations = {
     set(state,incidentes){
-        state.list = incidentes.sort((a,b)=>a.category.prioridad.sla - b.category.prioridad.sla).map(assembleVM)
+        state.list = incidentes.sort((a,b)=>{
+            const aPriority = PRIORITIES.find(x=> x[0] === a.category.prioridad.label && x[1] === a.affected.priority)[2]
+            const bPriority = PRIORITIES.find(x=> x[0] === b.category.prioridad.label && x[1] === b.affected.priority)[2]
+            return aPriority- bPriority 
+
+        }).map(assembleVM)
 
     },
     add(state,incidente){

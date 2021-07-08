@@ -4,8 +4,8 @@
       <div style="float:right;" class="my-3 mr-2" v-if="$store.state.user.rol === 'teacher' || $store.state.user.rol=== 'volunteer'">
         <add-incidente />
       </div>
-        <div v-if="$store.state.user.rol === 'admin'">
-            <export   class="my-3 mr-2"
+        <div >
+            <export  v-if="$store.state.user.rol === 'admin'"  class="my-3 mr-2"
             style="float:right"   />
         </div>
   </div>

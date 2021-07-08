@@ -17,7 +17,7 @@
             <v-form ref="form" style="padding-top:0.5rem">
                 <v-row>
                     <v-col cols="12">
-                        <user-picker v-model="affected"></user-picker>
+                        <user-picker :assign="['voluntario','maestro']" v-model="affected"></user-picker>
 
                     </v-col> 
                 </v-row>

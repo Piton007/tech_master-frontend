@@ -68,7 +68,7 @@ export default {
                 await updatePass.bind(this)({password:this.password})
                 this.$store.commit("user/updatePassword")
                 let self = this
-                if(["admin","tech"].some(x=>this.$store.state.user.rol === x)){
+                if(["admin","tech","tech_2"].some(x=>this.$store.state.user.rol === x)){
                     this.$router.push({path:"/admin/requerimientos/"})
                 }else{
                     this.$router.push({path:"/requerimientos/"})

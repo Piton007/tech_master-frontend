@@ -70,7 +70,8 @@
               <v-text-field
                   
                   v-model="cel"
-                  :rules="[v=>v=> !!v || '*Campo obligatorio']"
+                  prepend-icon="mdi-cellphone"
+                  :rules="[v=> !!v || '*Campo obligatorio']"
                   label="Teléfono"
               >
               </v-text-field>
@@ -141,15 +142,16 @@
                 </v-select>
               </v-col>
             </v-row>
-              <v-row>
+              <v-row v-if="$store.state.user.rol !== 'admin'">
               <v-col cols="12">
                 <v-select
+                  
                   v-model="requerimientoId"
                   prepend-icon="mdi-clipboard-text"
+                  :rules="[v=> !!v || '*Campo obligatorio']"
                   :items="requerimientos"
                   item-text="text"
                   item-value="value"
-                  :rules="[v=> !!v || '*Campo obligatorio']"
                   label="Requerimiento"
                 >
                 </v-select>
@@ -203,7 +205,7 @@
                 >
             <v-icon>mdi-plus</v-icon>
         </v-btn>
-        <export-excel   class="my-3 mr-2"
+        <export-excel v-if="$store.state.user.rol === 'admin'"   class="my-3 mr-2"
             style="float:right"   />
     </div>
       
