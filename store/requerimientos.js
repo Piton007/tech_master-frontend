@@ -34,7 +34,8 @@ export const mutations = {
         state.list.unshift(assembleVM(requerimiento))
     },
     set(state,requerimientos){
-        state.list = requerimientos.sort((a,b)=>{return dayjs(b.fechaCreacion).diff(a.fechaCreacion)}).map(assembleVM)
+        state.list = requerimientos
+        .sort((a,b)=>{return dayjs(b.fechaCreacion).diff(a.fechaCreacion)}).map(assembleVM)
     },
     spliceById(state,requerimiento){
         const index = state.list.findIndex(x=>x.code === requerimiento.code)

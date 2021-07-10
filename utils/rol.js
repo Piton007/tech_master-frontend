@@ -44,8 +44,15 @@ const INCIDENTES = {
 const LOGOUT =  {
   icon: 'mdi-logout',
   title: 'Salir',
-  name:"index",
+  name:"ayuda",
   to: '/'
+}
+
+const HELP = {
+  icon: 'mdi-help-circle',
+  title: 'Ayuda',
+  name: "index",
+  to: "/ayuda"
 }
 
 
@@ -54,30 +61,38 @@ const rols = {
           ADMIN_REQUERIMIENTOS,
           ADMIN_INCIDENTES,
           ADMIN_USUARIOS,
-          LOGOUT
+          HELP,
+          LOGOUT,
     ],
     tech_2:[
         ADMIN_REQUERIMIENTOS,
         ADMIN_INCIDENTES,
         ADMIN_USUARIOS,
-        LOGOUT
+        HELP,
+        LOGOUT,
+        
     ],
     admin: [
           ADMIN_REQUERIMIENTOS,
           ADMIN_INCIDENTES,
           ADMIN_USUARIOS,
           ADMIN_CATEGORIES,
-          LOGOUT
+          HELP,
+          LOGOUT,
     ],
     teacher: [
           CLIENT_REQUERIMIENTOS,
-          INCIDENTES, 
-          LOGOUT
+          INCIDENTES,
+          HELP, 
+          LOGOUT,
+          
     ],
     volunteer: [
         CLIENT_REQUERIMIENTOS,
         INCIDENTES,
-        LOGOUT
+        HELP,
+        LOGOUT,
+      
     ]
 
 }
