@@ -11,4 +11,4 @@ RUN npm install
 RUN npm audit fix
 RUN npm run build
 
-ENTRYPOINT ["sh", "-c", "HOST=0.0.0.0 PORT=3000 npm run start"]
+ENTRYPOINT ["sh", "-c", "HOST=0.0.0.0 PORT=${PORT} npm run start"]

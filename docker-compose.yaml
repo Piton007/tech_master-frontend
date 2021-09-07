@@ -3,12 +3,6 @@ services:
   frontend:
     build: .
     ports: 
-      - 3000:3000
+      - ${PORT}:${PORT}
     environment:
       - API_HOST={$API_HOST}
-  proxy:
-    build: proxy
-    ports:
-      - ${PORT}:80
-    depends_on: 
-      - frontend
