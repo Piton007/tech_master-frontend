@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "nuxt",
     "build": "node --max-old-space-size=600 ./node_modules/.bin/nuxt build",
+    "prestart": "npm run build",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "test": "jest"
