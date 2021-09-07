@@ -5,4 +5,5 @@ services:
     ports: 
       - ${PORT}:${PORT}
     environment:
-      - API_HOST={$API_HOST}
+      - API_HOST=${API_HOST}
+      - PORT=${PORT}
